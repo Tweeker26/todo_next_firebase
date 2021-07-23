@@ -11,8 +11,10 @@ async function getTodos(req: Request, res: Response) {
       todos.push(doc.data() as TodoItem);
     });
 
+    // @ts-ignore
     res.status(200).json(todos);
   } catch (error) {
+    // @ts-ignore
     res.status(500).json({ error });
   }
 }

@@ -16,7 +16,7 @@ const LoginForm = () => {
   const [loading, setLoading] = useState(false);
   const { messages, notify } = createSnackbarQueue();
 
-  const handleChange = (type: string) => (e: SyntheticEvent) => {
+  const handleChange = (type: string) => (e: SyntheticEvent & { target: HTMLInputElement }) => {
     setLoginData((prev) => ({ ...prev, [type]: e.target.value }));
   };
 
@@ -24,7 +24,6 @@ const LoginForm = () => {
     e.preventDefault();
     setLoading(true);
     auth.signInWithEmail(loginData).catch((error) => {
-      console.log('error------->', error);
       setLoading(false);
       notify({
         title: 'An error occurred.',

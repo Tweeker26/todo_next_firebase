@@ -46,25 +46,28 @@ export default function Home() {
             </DataTableRow>
           </DataTableHead>
           <DataTableBody>
-            {data?.map((item: TodoItem, i: number) => (
-              <DataTableRow key={i} selected={checked[i]}>
-                <DataTableCell hasFormControl>
-                  <Checkbox
-                    checked={checked[i]}
-                    onChange={(evt) => {
-                      checked[i] = evt.currentTarget.checked;
-                      setChecked({ ...checked });
-                    }}
-                  />
-                </DataTableCell>
-                <DataTableCell>{item.title}</DataTableCell>
+            {
+              // @ts-ignore
+              data?.map((item: TodoItem, i: number) => (
+                <DataTableRow key={i} selected={checked[i]}>
+                  <DataTableCell hasFormControl>
+                    <Checkbox
+                      checked={checked[i]}
+                      onChange={(evt) => {
+                        checked[i] = evt.currentTarget.checked;
+                        setChecked({ ...checked });
+                      }}
+                    />
+                  </DataTableCell>
+                  <DataTableCell>{item.title}</DataTableCell>
 
-                <DataTableCell>{item.owner}</DataTableCell>
-                <DataTableCell>
-                  <Switch checked={item.isComplete} />
-                </DataTableCell>
-              </DataTableRow>
-            ))}
+                  <DataTableCell>{item.owner}</DataTableCell>
+                  <DataTableCell>
+                    <Switch checked={item.isComplete} />
+                  </DataTableCell>
+                </DataTableRow>
+              ))
+            }
           </DataTableBody>
         </DataTableContent>
       </DataTable>
