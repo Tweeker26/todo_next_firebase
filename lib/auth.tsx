@@ -2,9 +2,16 @@ import { useState, useEffect, useContext, createContext } from 'react';
 import Router from 'next/router';
 
 import firebase from './firebase';
-import { IAuthContext } from '../types';
+import { IAuthContext, UserType } from '../types';
 
-const AuthContext = createContext<IAuthContext | null>(null);
+const defaultContext: IAuthContext = {
+  user: null,
+  loading: false,
+  signInWithEmail: ({ email, password }) => new Promise((resolve) => resolve(null)),
+  signOut: () => null,
+};
+
+const AuthContext = createContext<IAuthContext>(defaultContext);
 
 export function AuthProvider({ children }: any) {
   const auth = useProvideAuth();
@@ -16,12 +23,10 @@ export const useAuth = () => {
 };
 
 function useProvideAuth(): IAuthContext {
-  const [user, setUser] = useState<firebase.User | null>(null);
+  const [user, setUser] = useState<UserType>(null);
   const [loading, setLoading] = useState(true);
 
-  const handleUser = (
-    user: firebase.User | ((prevState: null | firebase.User) => null | firebase.User) | null
-  ) => {
+  const handleUser = (user: UserType) => {
     if (user) {
       setUser(user);
       setLoading(false);
@@ -33,7 +38,7 @@ function useProvideAuth(): IAuthContext {
     }
   };
 
-  const signInWithEmail = (email: string, password: string) => {
+  const signInWithEmail = ({ email, password }: { email: string; password: string }) => {
     setLoading(true);
     return firebase
       .auth()

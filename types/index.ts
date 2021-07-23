@@ -8,8 +8,16 @@ export type TodoItem = {
 };
 
 export interface IAuthContext {
-  user: firebase.User | null;
+  user: UserType;
   loading: boolean;
-  signInWithEmail: (email: string, password: string) => void;
+  signInWithEmail: ({
+    email,
+    password,
+  }: {
+    email: string;
+    password: string;
+  }) => Promise<UserType | void>;
   signOut: () => void;
 }
+
+export type UserType = firebase.User | null | undefined;

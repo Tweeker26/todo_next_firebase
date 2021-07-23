@@ -7,7 +7,7 @@ if (!admin.apps.length) {
       privateKey: process.env.FIREBASE_PRIVATE_KEY!.replace(/\\n/g, '\n'),
       projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
     }),
-    // databaseURL: 'https://feedback-test-a7c2d.firebaseio.com',
+    databaseURL: 'https://todo-next-e5155.firebaseio.com',
   });
 }
 
