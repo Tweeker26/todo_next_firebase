@@ -8,14 +8,11 @@ import {
   TopAppBarTitle,
 } from '@rmwc/top-app-bar';
 import Menu from '@/components/Menu';
-import { UserType } from '@/types/index';
+import { useAuth } from '@/lib/auth';
 
-interface ITopBar {
-  user: UserType;
-}
-
-const TopBar = ({ user }: ITopBar) => {
+const TopBar = () => {
   const [open, setOpen] = useState(false);
+  const { user } = useAuth();
 
   return (
     <>

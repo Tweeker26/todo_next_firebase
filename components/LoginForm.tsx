@@ -5,6 +5,7 @@ import { TextField } from '@rmwc/textfield';
 import { createSnackbarQueue, SnackbarQueue } from '@rmwc/snackbar';
 
 import { useAuth } from '@/lib/auth';
+
 import styles from '@/styles/LoginForm.module.css';
 
 const LoginForm = () => {
@@ -50,6 +51,7 @@ const LoginForm = () => {
         />
         <TextField
           required
+          autoComplete="new-password"
           label="Password"
           value={loginData.password}
           type="password"

@@ -1,17 +1,11 @@
-import { FC, ReactNode } from 'react';
+import { FC } from 'react';
 
 import TopBar from '@/components/TopBar';
-import { UserType } from '@/types/index';
 
-interface ILayout {
-  children: ReactNode;
-  user: UserType;
-}
-
-const Layout: FC<ILayout> = ({ children, user }) => {
+const Layout: FC = ({ children }) => {
   return (
     <>
-      <TopBar user={user} />
+      <TopBar />
       {children}
     </>
   );

@@ -1,13 +1,14 @@
-import { useAuth } from '@/lib/auth';
 import Layout from '@/components/Layout';
 import LoginForm from '@/components/LoginForm';
 
-export default function Login() {
-  const { user } = useAuth();
+import styles from '@/styles/Main.module.css';
 
+export default function Login() {
   return (
-    <Layout user={user}>
-      <LoginForm />
+    <Layout>
+      <main className={styles.main}>
+        <LoginForm />
+      </main>
     </Layout>
   );
 }

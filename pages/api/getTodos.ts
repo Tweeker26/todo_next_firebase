@@ -1,7 +1,9 @@
+import { NextApiRequest, NextApiResponse } from 'next';
+
 import firebase from '@/lib/firebase';
 import { TodoItem } from '@/types/index';
 
-async function getTodos(req: Request, res: Response) {
+async function getTodos(req: NextApiRequest, res: NextApiResponse) {
   try {
     const firestore = firebase.firestore();
     const snapshot = await firestore.collection('todos').get();
@@ -11,10 +13,8 @@ async function getTodos(req: Request, res: Response) {
       todos.push(doc.data() as TodoItem);
     });
 
-    // @ts-ignore
     res.status(200).json(todos);
   } catch (error) {
-    // @ts-ignore
     res.status(500).json({ error });
   }
 }

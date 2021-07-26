@@ -1,76 +1,34 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import useSWR from 'swr';
-import {
-  DataTable,
-  DataTableContent,
-  DataTableBody,
-  DataTableCell,
-  DataTableHead,
-  DataTableHeadCell,
-  DataTableRow,
-} from '@rmwc/data-table';
-import { Switch } from '@rmwc/switch';
-import { Checkbox } from '@rmwc/checkbox';
 
+import firebase from '@/lib/firebase';
 import Layout from '@/components/Layout';
-import { useAuth } from '@/lib/auth';
-import fetcher from '@/lib/fetcher';
-import { TodoItem } from '@/types/index';
+import Table from '@/components/Table';
+import AddTodo from '@/components/AddTodo';
+
+import styles from '@/styles/Main.module.css';
 
 export default function Home() {
   const router = useRouter();
-  const { user } = useAuth();
-  const { data, error } = useSWR('/api/getTodos', fetcher);
 
-  const [checked, setChecked] = useState<any>({});
-
-  // useEffect(() => {
-  //   if (!user) {
-  //     router.push('/login');
-  //   }
-  // }, [user]);
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        const { currentUser } = firebase.auth();
+        localStorage.setItem('uid', currentUser!.uid);
+      } else {
+        localStorage.setItem('uid', '');
+        router.push('/login');
+      }
+    });
+  }, []);
 
   return (
-    <Layout user={user}>
-      <DataTable>
-        <DataTableContent>
-          <DataTableHead>
-            <DataTableRow>
-              <DataTableHeadCell hasFormControl>
-                <Checkbox />
-              </DataTableHeadCell>
-              <DataTableHeadCell>Title</DataTableHeadCell>
-              <DataTableHeadCell>Owner</DataTableHeadCell>
-              <DataTableHeadCell>Completed</DataTableHeadCell>
-            </DataTableRow>
-          </DataTableHead>
-          <DataTableBody>
-            {
-              // @ts-ignore
-              data?.map((item: TodoItem, i: number) => (
-                <DataTableRow key={i} selected={checked[i]}>
-                  <DataTableCell hasFormControl>
-                    <Checkbox
-                      checked={checked[i]}
-                      onChange={(evt) => {
-                        checked[i] = evt.currentTarget.checked;
-                        setChecked({ ...checked });
-                      }}
-                    />
-                  </DataTableCell>
-                  <DataTableCell>{item.title}</DataTableCell>
-
-                  <DataTableCell>{item.owner}</DataTableCell>
-                  <DataTableCell>
-                    <Switch checked={item.isComplete} />
-                  </DataTableCell>
-                </DataTableRow>
-              ))
-            }
-          </DataTableBody>
-        </DataTableContent>
-      </DataTable>
+    <Layout>
+      <main className={styles.main}>
+        <AddTodo />
+        <Table />
+      </main>
     </Layout>
   );
 }

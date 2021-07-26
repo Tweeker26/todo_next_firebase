@@ -1,10 +1,11 @@
 import firebase from '@/lib/firebase';
 
 export type TodoItem = {
-  createdAt: Date;
+  createdAt: firebase.firestore.Timestamp;
   isComplete: boolean;
   owner: string;
   title: string;
+  id: string;
 };
 
 export interface IAuthContext {
