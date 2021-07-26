@@ -1,7 +1,12 @@
 import { Menu as DefaultMenu, MenuItem, MenuSurfaceAnchor } from '@rmwc/menu';
 import { useAuth } from '@/lib/auth';
 
-const Menu = ({ open, setOpen }: any) => {
+interface IMenu {
+  open: boolean;
+  setOpen: (arg: boolean) => void;
+}
+
+const Menu = ({ open, setOpen }: IMenu) => {
   const auth = useAuth();
 
   const closeHandler = () => {
